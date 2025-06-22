@@ -671,12 +671,13 @@
                 <a href="#contact" class="footer-link">Contact</a>
             </div>
 
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
+          <footer>
+    <div class="social-media">
+        <a href="https://www.facebook.com/jeffmadeit21" target="_blank"><i class="fab fa-facebook-f"></i></a> <!-- Replace with your actual Facebook page if different -->
+        <a href="https://x.com/jeffmadeit21" target="_blank"><i class="fab fa-x-twitter"></i></a> <!-- X icon -->
+        <a href="https://www.instagram.com/jeffmadeit_21" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+</footer>
 
             <div class="copyright">
                 &copy; <span id="year">2025</span> Your Name. All Rights Reserved.
@@ -684,55 +685,52 @@
         </div>
     </footer>
 
-    <script>
-        // Update copyright year
-        document.getElementById('year').textContent = new Date().getFullYear();
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('main');
+    if (window.innerWidth < 992 && sidebar) {
+        sidebar.classList.add('open');
+        main.classList.add('shifted'); // Adjust main content when sidebar opens
+    }
 
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
+    const navLinks = document.querySelectorAll('.nav-item a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 992 && sidebar) {
+                sidebar.classList.remove('open');
+                main.classList.remove('shifted'); // Reset main content when sidebar closes
+            }
 
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
+            document.querySelector('.nav-item.active')?.classList.remove('active');
+            link.parentElement.classList.add('active');
         });
+    });
 
-        // Close sidebar when clicking a link on mobile
-        const navLinks = document.querySelectorAll('.nav-item a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 992) {
-                    sidebar.classList.remove('open');
-                }
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Message sent successfully! (This is a demo)');
+        contactForm.reset();
+    });
 
-                // Highlight active nav item
-                document.querySelector('.nav-item.active').classList.remove('active');
-                link.parentElement.classList.add('active');
-            });
-        });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            if (!this.href.startsWith(window.location.origin + '#')) return; // Skip external links
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
 
-        // Form submission (prevent default for demo)
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Message sent successfully! (This is a demo)');
-            contactForm.reset();
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            if (targetElement) {
                 e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
                 window.scrollTo({
                     top: targetElement.offsetTop - 20,
                     behavior: 'smooth'
                 });
-            });
+            }
         });
-    </script>
+    });
+});
+</script>
 </body>
 
 </html>
